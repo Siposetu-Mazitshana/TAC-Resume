@@ -3,3 +3,4 @@ openai
 reportlab
 python-docx
 psycopg2-binary
+scikit-learn
