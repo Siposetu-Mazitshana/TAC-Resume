@@ -5,20 +5,38 @@ from datetime import datetime
 import streamlit as st
 
 # Database connection using environment variables
+from urllib.parse import urlparse
+import psycopg2
+import os
+import streamlit as st
+
 def get_db_connection():
-    """Create database connection using environment variables"""
+    """Create DB connection from DATABASE_URL (Render) or fallback env vars (local dev)"""
     try:
-        conn = psycopg2.connect(
-            host=os.getenv("PGHOST", "localhost"),
-            database=os.getenv("PGDATABASE", "tac_resume"),
-            user=os.getenv("PGUSER", "postgres"),
-            password=os.getenv("PGPASSWORD", ""),
-            port=os.getenv("PGPORT", "5432")
-        )
+        db_url = os.getenv("DATABASE_URL")
+        if db_url:
+            result = urlparse(db_url)
+            conn = psycopg2.connect(
+                dbname=result.path[1:],
+                user=result.username,
+                password=result.password,
+                host=result.hostname,
+                port=result.port
+            )
+        else:
+            # Local development fallback
+            conn = psycopg2.connect(
+                host=os.getenv("PGHOST", "localhost"),
+                database=os.getenv("PGDATABASE", "tac_resume"),
+                user=os.getenv("PGUSER", "postgres"),
+                password=os.getenv("PGPASSWORD", ""),
+                port=os.getenv("PGPORT", "5432")
+            )
         return conn
     except Exception as e:
-        st.error(f"Database connection failed: {str(e)}")
+        st.error(f"❌ Database connection failed: {str(e)}")
         return None
+
 
 def init_database():
     """Initialize database tables"""
