@@ -1,3 +1,20 @@
+
+import streamlit as st
+
+# Must be the first Streamlit command
+st.set_page_config(
+    page_title="TAC Resume Builder",
+    page_icon="📄",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# THEN import other modules
+import pandas as pd
+from datetime import datetime
+import json
+from auth import authenticate_user, register_user, logout_user
+# ... rest of imports
 import streamlit as st
 import pandas as pd
 from datetime import datetime
