@@ -3,7 +3,15 @@ import pandas as pd
 from datetime import datetime
 import json
 
-# Import our modules
+# Configure the Streamlit page FIRST
+st.set_page_config(
+    page_title="TAC Resume Builder",
+    page_icon="📄",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# Now it's safe to import other modules and run logic
 from auth import authenticate_user, register_user, logout_user
 from database import init_database, get_user_resumes, save_resume_data, get_resume_data
 from ai_services import generate_professional_summary, generate_job_description, get_content_suggestions
