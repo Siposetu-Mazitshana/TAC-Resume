@@ -34,14 +34,6 @@ from utils import validate_email, sanitize_input
 # Initialize the database
 init_database()
 
-# Configure the Streamlit page
-st.set_page_config(
-    page_title="TAC Resume Builder",
-    page_icon="📄",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
-
 # Initialize session state
 if 'authenticated' not in st.session_state:
     st.session_state.authenticated = False
